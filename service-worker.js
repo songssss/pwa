@@ -48,6 +48,29 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
+
+  e.respondWith(
+    caches.match(e.request).then(function(response) {
+      if (response) {
+        console.log('Found response in cache:', response);
+        return response;
+      }
+      console.log('No response found in cache. About to fetch from network...');
+
+      return fetch(e.request).then(function(response) {
+        console.log('Response from network is:', response);
+        return response;
+      });
+    })
+  );
+
+
+});
+
+
+/*
+self.addEventListener('fetch', function(e) {
+  console.log('[Service Worker] Fetch', e.request.url);
   var dataUrl = 'https://query.yahooapis.com/v1/public/yql';
   if (e.request.url.indexOf(dataUrl) > -1) {
 
@@ -68,3 +91,4 @@ self.addEventListener('fetch', function(e) {
     );
   }
 });
+*/
