@@ -194,8 +194,8 @@
         if (request.status === 200) {
           var response = JSON.parse(request.response);
           var results = response.query.results;
-          //results.key = key;
-          //results.label = label;
+          results.key = key;
+          results.label = label;
           results.created = response.query.created;
           app.updateForecastCard(results);
         }
@@ -364,7 +364,7 @@
   // TODO add service worker code here
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-             .register('../service-worker.js')
+             .register('/service-worker.js')
              .then(function() { console.log('Service Worker Registered'); });
   }
 })();
