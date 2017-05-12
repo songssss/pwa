@@ -194,7 +194,7 @@
         if (request.status === 200) {
           var response = JSON.parse(request.response);
           var results = response.query.results;
-          results.key = key;
+          //results.key = key;
           results.label = label;
           results.created = response.query.created;
           app.updateForecastCard(results);
