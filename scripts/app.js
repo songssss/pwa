@@ -195,7 +195,7 @@
           var response = JSON.parse(request.response);
           var results = response.query.results;
           //results.key = key;
-          results.label = label;
+          //results.label = label;
           results.created = response.query.created;
           app.updateForecastCard(results);
         }
