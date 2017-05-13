@@ -1,4 +1,3 @@
-window.onload = function () {
 (function() {
   'use strict';
 
@@ -9,4 +8,3 @@ window.onload = function () {
              .then(function() { console.log('Service Worker Registered'); });
   }
 })();
-}
