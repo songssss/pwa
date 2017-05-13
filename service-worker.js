@@ -29,7 +29,8 @@ self.addEventListener('install', function(e) {
 });
 
 self.addEventListener('activate', function(e) {
-  console.log('[ServiceWorker] Activate');
+  console.log('[ServiceWorker] Activate, Start!!!!!');
+  document.getElementById("hello").innerHTML = "activate!";
   e.waitUntil(
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
@@ -46,6 +47,8 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
+    document.getElementById("hello").innerHTML = "Fetch!";
+
 
   e.respondWith(
     caches.match(e.request).then(function(response) {
@@ -53,10 +56,13 @@ self.addEventListener('fetch', function(e) {
         console.log('Found response in cache:', response);
         return response;
       }
-      console.log('No response found in cache. About to fetch from network...');
+      console.log('Network!!!!!!! No response found in cache. About to fetch from network...');
+    document.getElementById("hello").innerHTML = "Network!";
 
       return fetch(e.request).then(function(response) {
-        console.log('Response from network is:', response);
+        console.log('Response from network is: Fetch!!!!!!!', response);
+		    document.getElementById("hello").innerHTML = "Fetch!";
+
         return response;
       });
     })
