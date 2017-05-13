@@ -1,3 +1,5 @@
+window.onload = function(){
+
 var dataCacheName = 'pwaData-v1';
 var cacheName = 'pwa-final-1';
 var element = document.getElementById("hello");
@@ -72,3 +74,4 @@ self.addEventListener('fetch', function(e) {
 
 });
 
+}
