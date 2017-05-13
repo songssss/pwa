@@ -1,5 +1,6 @@
 var dataCacheName = 'pwaData-v1';
 var cacheName = 'pwa-final-1';
+var element = document.getElementById("hello");
 var filesToCache = [
   './',
   './index.html',
@@ -30,7 +31,7 @@ self.addEventListener('install', function(e) {
 
 self.addEventListener('activate', function(e) {
   console.log('[ServiceWorker] Activate, Start!!!!!');
-  document.getElementById("hello").innerHTML = "activate!";
+  element.innerHTML = "activate!";
   e.waitUntil(
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
@@ -47,7 +48,7 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
-    document.getElementById("hello").innerHTML = "Fetch!";
+      element.innerHTML = "Fetch!";
 
 
   e.respondWith(
@@ -57,11 +58,11 @@ self.addEventListener('fetch', function(e) {
         return response;
       }
       console.log('Network!!!!!!! No response found in cache. About to fetch from network...');
-    document.getElementById("hello").innerHTML = "Network!";
+    element.innerHTML = "Network!";
 
       return fetch(e.request).then(function(response) {
         console.log('Response from network is: Fetch!!!!!!!', response);
-		    document.getElementById("hello").innerHTML = "Fetch!";
+		element.innerHTML = "Fetch!";
 
         return response;
       });
