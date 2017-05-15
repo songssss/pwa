@@ -18,6 +18,7 @@ var filesToCache = [
   './images/wind.png'
 ];
 
+//install
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
   e.waitUntil(
@@ -28,8 +29,33 @@ self.addEventListener('install', function(e) {
   );
 });
 
+
+
+//fetch
+self.addEventListener('fetch', function(e) {
+  console.log('[Service Worker] Fetch', e.request.url);
+
+  e.respondWith(
+    caches.match(e.request).then(function(response) {
+      if (response) {
+        console.log('Found response in cache:', response);
+        return response;
+      }
+      console.log('No response found in cache from network...');
+
+      return fetch(e.request).then(function(response) {
+        console.log('Response from network is: Fetch', response);
+        return response;
+      });
+    })
+  );
+});
+
+
+
+//activate
 self.addEventListener('activate', function(e) {
-  console.log('[ServiceWorker] Activate, Start!!!!!');
+  console.log('[ServiceWorker] Activate');
   e.waitUntil(
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
@@ -43,25 +69,3 @@ self.addEventListener('activate', function(e) {
 
   return self.clients.claim();
 });
-
-self.addEventListener('fetch', function(e) {
-  console.log('[Service Worker] Fetch', e.request.url);
-
-  e.respondWith(
-    caches.match(e.request).then(function(response) {
-      if (response) {
-        console.log('Found response in cache:', response);
-        return response;
-      }
-      console.log('Network!!!!!!! No response found in cache. About to fetch from network...');
-
-      return fetch(e.request).then(function(response) {
-        console.log('Response from network is: Fetch!!!!!!!', response);
-        return response;
-      });
-    })
-  );
-
-
-});
-
